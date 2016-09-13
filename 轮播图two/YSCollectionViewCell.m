@@ -8,6 +8,7 @@
 
 #import "YSCollectionViewCell.h"
 #import "HMObjcSugar.h"
+#import "UIImageView+WebCache.h"
 
 @interface YSCollectionViewCell ()
 
@@ -16,11 +17,15 @@
 @implementation YSCollectionViewCell {
     UIImageView * _imageView;
 }
-- (void)setUrl:(NSURL *)url{
-    _url = url;
-    NSData * data = [NSData dataWithContentsOfURL:_url];
-    UIImage * image = [UIImage imageWithData:data];
-    _imageView.image = image;
+- (void)setUrl:(NSString *)url{
+//    _url = url;
+//    NSURL * dataUrl = [NSURL URLWithString:url];
+//    NSData * data = [NSData dataWithContentsOfURL:dataUrl];
+//    UIImage * image = [UIImage imageWithData:data];
+//    _imageView.image = image;
+////    [image ];
+    NSURL * dataUrl = [NSURL URLWithString:url];
+    [_imageView sd_setImageWithURL:dataUrl placeholderImage:[UIImage imageNamed:@"pageOther.png"]];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(bigBig:) name:@"zys" object:nil];
 }
 

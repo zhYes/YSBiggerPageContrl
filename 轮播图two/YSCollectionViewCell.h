@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface YSCollectionViewCell : UICollectionViewCell
-@property(nonatomic,strong)NSURL *url;
+@property(nonatomic,copy)NSString *url;
 @end

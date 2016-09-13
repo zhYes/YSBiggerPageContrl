@@ -19,12 +19,12 @@
 NSString * const YSCollectionViewCellId = @"YSCollectionViewCellId";
 
 @implementation YSCollectionView {
-    NSArray <NSURL *>   *_urls;
+    NSArray <NSString *>   *_urls;
     UIScrollView        *_scrollV;
     NSTimer             *_timer;
 }
 
-- (instancetype)initWithUrls:(NSArray <NSURL *> *)urls
+- (instancetype)initWithUrls:(NSArray <NSString *> *)urls
 {
     self = [super initWithFrame:CGRectZero collectionViewLayout:[[YSFlowLayout alloc] init]];
     if (self) {

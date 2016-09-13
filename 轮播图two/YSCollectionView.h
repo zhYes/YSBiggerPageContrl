@@ -17,6 +17,6 @@
 
 @interface YSCollectionView : UICollectionView
 
-- (instancetype)initWithUrls:(NSArray <NSURL *> *)urls;
+- (instancetype)initWithUrls:(NSArray <NSString *> *)urls;
 @property(nonatomic,weak)id <YSCollectionViewDelegate> pageDelegate;
 @end

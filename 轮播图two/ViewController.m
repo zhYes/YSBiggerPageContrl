@@ -18,12 +18,22 @@
 NSString * const tableCellId = @"tableCellId";
 #define kHeaderHeight 200
 #define kPageHeight 20
+#define kPageWidth 20
+
 @implementation ViewController {
-    NSArray <NSURL *>           *_urls;
+    NSArray <NSString *>           *_urls;
     YSCollectionView            *_collectionView;
     UIView                      *_header;
     UIStatusBarStyle            _statusBarYStyle;
     UIPageControl               *_myPageControl;
+}
+
+//创建图片地址字符串数组即可! 检查自己的是否支持HTTPS网络请求
+- (void)loadDataFromNet {
+    _urls = @[@"http://imgsrc.baidu.com/baike/pic/item/a6efce1b9d16fdfa241bf189b68f8c5494ee7b65.jpg",
+              @"http://pic2016.5442.com:82/2016/0811/26/1.jpg%21960.jpg",
+              @"http://imgsrc.baidu.com/forum/pic/item/5bb5c9ea15ce36d3da6bfdb93af33a87e850b1cf.jpg",
+              @"http://image.tianjimedia.com/uploadImages/2012/178/K830IZAG0Q20.jpg"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -34,7 +44,8 @@ NSString * const tableCellId = @"tableCellId";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadData];
+//    [self loadData];
+    [self loadDataFromNet];
     [self addTableView];
     [self addHeardView];
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -65,7 +76,8 @@ NSString * const tableCellId = @"tableCellId";
     _myPageControl.currentPage = currentPage;
 }
 - (void)addPageControl {
-    CGFloat pageW = 20 * _urls.count;
+    
+    CGFloat pageW = kPageWidth * _urls.count;
     CGFloat pageH = kPageHeight;
     _myPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake((_header.hm_width - pageW) * 0.5, _header.hm_height - pageH, pageW, pageH)];
 //    _myPageControl.backgroundColor = [UIColor redColor];
@@ -79,6 +91,7 @@ NSString * const tableCellId = @"tableCellId";
     [_myPageControl setValue:[UIImage imageNamed:@"pageOther.png"] forKey:@"_pageImage"];
 }
 
+//测试代码可以不用关心 ..⬇️
 - (void)getUIPageControlProperties{
     unsigned int count;
     /**
@@ -98,13 +111,13 @@ NSString * const tableCellId = @"tableCellId";
     
     for (int i=0; i<count; i++) {
         //2.取出objc_property_t数组中的property
-        Ivar property = propertyList[i];
+//        Ivar property = propertyList[i];
         
         //3.获取的是C语言的名称
-        const char *cPropertyName = ivar_getName(property);
+//        const char *cPropertyName = ivar_getName(property);
         
         //4.将C语言的字符串转成OC的
-        NSString * ocPropertyName = [[NSString alloc] initWithCString:cPropertyName encoding:NSUTF8StringEncoding];
+//        NSString * ocPropertyName = [[NSString alloc] initWithCString:cPropertyName encoding:NSUTF8StringEncoding];
         
         //5.打印结果如下 ,我们重点关心的就是 _pageImage , _currentPageImage
         //  我们知道了这两个名字 就可以利用KVC设置我们想要的图片!
@@ -132,16 +145,8 @@ NSString * const tableCellId = @"tableCellId";
     //5.C语言中,用完copy,create的东西之后,最好释放
     free(propertyList);
 }
+//测试代码可以不用关心 ..⤴️
 
-- (void)loadData {
-    NSMutableArray * temp = [NSMutableArray array];
-    for (int i = 0; i < 3; i ++) {
-        NSString * fileName = [NSString stringWithFormat:@"%zd.jpg",i];
-        NSURL * url = [[NSBundle mainBundle] URLForResource:fileName withExtension:nil];
-        [temp addObject:url];
-    }
-    _urls = temp.copy;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 100;
